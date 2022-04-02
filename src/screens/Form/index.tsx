@@ -43,7 +43,8 @@ export function Form() {
 
       Toast.show({
         type: "success",
-        text1: "Cadastrado com sucesso"
+        text1: "Cadastrado com sucesso",
+        position: 'bottom'
       })
 
       // console.log(newData);
@@ -51,7 +52,8 @@ export function Form() {
     } catch (err) {
       Toast.show({
         type: "error",
-        text1: "Erro ao cadastrar dados"
+        text1: "Erro ao cadastrar dados",
+        position: 'bottom'
       })
     }
   }

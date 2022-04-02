@@ -4,7 +4,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper';
 export const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F2F3F5',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   form: {
     flex: 1,

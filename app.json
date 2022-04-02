@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "savepass",
+    "name": "Save Pass by silva, i. a.",
     "slug": "savepass",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.izael_dev.savepass"
     },
     "web": {
       "favicon": "./assets/favicon.png"
