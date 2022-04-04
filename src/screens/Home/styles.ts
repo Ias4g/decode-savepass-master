@@ -7,6 +7,25 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F2F3F5',
     alignItems: 'center',
   },
+
+  buttonNotDisabled: {
+    height: 56,
+    width: '100%',
+    backgroundColor: '#FDB924',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50
+  },
+
+  buttonDisabled: {
+    height: 56,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    backgroundColor: '#D8D8D8',
+  },
+
   title: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -32,9 +51,17 @@ export const styles = StyleSheet.create({
     padding: 24,
     paddingBottom: 150
   },
+
   footer: {
     width: '100%',
     padding: 24,
     marginBottom: getBottomSpace()
+  },
+
+  version: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: '#3D434D',
+    paddingBottom: 5
   }
 });

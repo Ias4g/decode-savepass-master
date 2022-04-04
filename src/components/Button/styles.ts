@@ -9,9 +9,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 50
   },
+
   title: {
     fontWeight: 'bold',
     color: '#3D434D',
-    fontSize: 15,
+    fontSize: 15
   }
 });

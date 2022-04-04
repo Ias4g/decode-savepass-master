@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Save Pass by silva, i. a.",
-    "slug": "savepass",
-    "version": "2.0.0",
+    "name": "Iza Passwords",
+    "slug": "izapasswords",
+    "version": "1.64.9114677884",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#80FC32"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,7 +22,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#80FC32"
       },
       "package": "com.izael_dev.savepass"
     },

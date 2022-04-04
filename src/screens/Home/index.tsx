@@ -1,6 +1,7 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 import { Card, CardProps } from '../../components/Card';
 import { HeaderHome } from '../../components/HeaderHome';
@@ -8,11 +9,13 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { styles } from './styles';
 import { Button } from '../../components/Button';
+import { NotFound } from '../NotFound';
 
 export function Home() {
+  const [currentVersion, setCurrentVersion] = useState("");
   const [data, setData] = useState<CardProps[]>([]);
 
-  const { getItem, setItem } = useAsyncStorage("@savepass:passwords")
+  const { getItem, setItem, removeItem } = useAsyncStorage("@savepass:passwords")
 
   async function handleFetchData() {
     const response = await getItem()
@@ -22,13 +25,49 @@ export function Home() {
     setData(data)
   }
 
-  async function handleRemove(id: string) {
+  async function handleRemove(id?: string) {
     const response = await getItem()
     const previewData = response ? JSON.parse(response) : []
 
-    const data = previewData.filter((item: CardProps) => item.id !== id)
-    setItem(JSON.stringify(data))
-    setData(data)
+    if (id) {
+      const data = previewData.filter((item: CardProps) => item.id !== id)
+
+      setItem(JSON.stringify(data))
+
+      handleFetchData()
+
+      Toast.show({
+        type: 'success',
+        text1: `Registro apagado!`,
+        position: 'top'
+      })
+
+    } else {
+      removeItem()
+
+      handleFetchData()
+
+      Toast.show({
+        type: 'success',
+        text1: "Todos os registros foram apagados com sucesso!",
+        position: 'top'
+      })
+    }
+  }
+
+  function generateVersion() {
+    const date = Date.now()
+    const myArrow = String(date)
+
+    const numberPrimary = myArrow.slice(0, 1)
+    const numberSecundary = myArrow.slice(1, 3)
+    const numberRest = myArrow.slice(3, myArrow.length)
+
+    let version = `${numberPrimary}.${numberSecundary}.${numberRest}`
+
+    console.log(currentVersion)
+
+    setCurrentVersion(version)
   }
 
   useFocusEffect(
@@ -36,6 +75,10 @@ export function Home() {
       handleFetchData()
     }, [])
   )
+
+  useEffect(() => {
+    generateVersion()
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -51,23 +94,36 @@ export function Home() {
         </Text>
       </View>
 
-      <FlatList
-        data={data}
-        keyExtractor={item => item.id}
-        style={styles.list}
-        contentContainerStyle={styles.listContent}
-        renderItem={({ item }) =>
-          <Card
-            data={item}
-            onPress={() => handleRemove(item.id)}
-          />
-        }
-      />
+      {data.length > 0 ? (
+        <FlatList
+          data={data}
+          keyExtractor={item => item.id}
+          style={styles.list}
+          contentContainerStyle={styles.listContent}
+          renderItem={({ item }) =>
+            <Card
+              data={item}
+              onPress={() => handleRemove(item.id)}
+            />
+          }
+        />
+      ) : (
+        <NotFound />
+      )}
 
       <View style={styles.footer}>
         <Button
+          style={!data.length ? styles.buttonDisabled : styles.buttonNotDisabled}
           title="Limpar lista"
+          onPress={() => handleRemove()}
+          disabled={!data.length}
         />
+      </View>
+
+      <View>
+        <Text style={styles.version}>
+          Versão: {currentVersion}
+        </Text>
       </View>
     </View>
   );
