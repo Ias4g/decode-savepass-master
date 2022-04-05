@@ -1,13 +1,13 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-
 import { styles } from './styles';
+
 
 export type CardProps = {
   id: string;
   name: string;
-  user: string;
+  email: string;
   password: string;
 }
 type Props = {
@@ -46,7 +46,7 @@ export function Card({ data, onPress }: Props) {
               </Text>
               :
               <Text style={styles.email}>
-                {data.user}
+                {data.email}
               </Text>
           }
         </View>

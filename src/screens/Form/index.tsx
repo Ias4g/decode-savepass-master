@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -7,47 +10,69 @@ import {
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import uuid from 'react-native-uuid';
-import { useAsyncStorage } from '@react-native-async-storage/async-storage';
-
+import * as yup from 'yup';
+import { Button } from '../../components/Button';
+import { ControlledInput } from '../../components/ControlledInput';
+import { HeaderForm } from '../../components/HeaderForm';
 import { styles } from './styles';
 
-import { Input } from '../../components/Input';
-import { Button } from '../../components/Button';
-import { HeaderForm } from '../../components/HeaderForm';
+type FormData = {
+  id: string
+  name: string
+  email: string
+  password: string
+  password_confirm: string
+}
+
+const schema = yup.object({
+  name: yup.string()
+    .required("Informe o nome do serviço!"),
+  email: yup.string()
+    .email("Digite um e-mail valido!")
+    .required("Informe seu melhor e-mail!"),
+  password: yup.string()
+    .required("Informe sua senha!")
+    .min(6, "A senha deve ter pelo menos 6 caracteres!")
+    .max(12, "A senha deve ter no maximo 12 caracteres!"),
+  password_confirm: yup.string()
+    .oneOf([yup.ref('password'), null], 'As senhas não conferem!')
+    .required("Informe a senha de confirmação!")
+    .min(6, "A senha deve ter pelo menos 6 caracteres!")
+    .max(12, "A senha deve ter no maximo 12 caracteres!")
+})
 
 export function Form() {
-  const [name, setName] = useState("")
-  const [user, setUser] = useState("")
-  const [password, setPassword] = useState("")
+  const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
+    resolver: yupResolver(schema)
+  })
 
   const { getItem, setItem } = useAsyncStorage("@savepass:passwords")
+  async function handleNew(data: FormData) {
+    const id = uuid.v4()
+    const name = data.name
+    const email = data.email
+    const password = data.password
 
-  async function handleNew() {
+    const newData = {
+      id,
+      name,
+      email,
+      password
+    }
+
     try {
-      const id = uuid.v4();
-
-      const newData = {
-        id,
-        name,
-        user,
-        password
-      }
-
       const response = await getItem()
       const previewData = response ? JSON.parse(response) : []
 
-      const data = [...previewData, newData]
+      const datas = [...previewData, newData]
 
-
-      await setItem(JSON.stringify(data));
+      setItem(JSON.stringify(datas))
 
       Toast.show({
         type: "success",
         text1: "Registro cadastrado com sucesso",
         position: 'top'
       })
-
-      // console.log(newData);
 
     } catch (err) {
       Toast.show({
@@ -69,26 +94,47 @@ export function Form() {
           <HeaderForm />
 
           <View style={styles.form}>
-            <Input
-              label="Nome do serviço"
-              onChangeText={setName}
+            <ControlledInput
+              name='name'
+              control={control}
+              icon="person"
+              placeholder="Nome do serviço."
+              error={errors.name}
             />
-            <Input
-              label="E-mail ou usuário"
-              autoCapitalize="none"
-              onChangeText={setUser}
+
+            <ControlledInput
+              name='email'
+              control={control}
+              icon="email"
+              placeholder="E-mail ou usuário."
+              keyboardType="email-address"
+              autoCapitalize='none'
+              error={errors.email}
             />
-            <Input
-              label="Senha"
+
+            <ControlledInput
+              name='password'
+              control={control}
+              icon="lock"
+              placeholder="Senha"
               secureTextEntry
-              onChangeText={setPassword}
+              error={errors.password}
+            />
+
+            <ControlledInput
+              name='password_confirm'
+              control={control}
+              icon="lock"
+              placeholder="Confirme a senha"
+              secureTextEntry
+              error={errors.password_confirm}
             />
           </View>
 
           <View style={styles.footer}>
             <Button
               title="Salvar"
-              onPress={handleNew}
+              onPress={handleSubmit(handleNew)}
             />
           </View>
         </ScrollView>

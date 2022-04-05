@@ -11,12 +11,13 @@ export const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     color: '#888D97',
-    fontSize: 15
+    fontSize: 15,
+    marginTop: 20
   },
 
   avatar: {
-    width: 150,
-    height: 150,
+    width: 80,
+    height: 80,
     marginTop: 150,
     opacity: 0.15
   }
