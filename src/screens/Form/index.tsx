@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import {
@@ -15,6 +16,7 @@ import { Button } from '../../components/Button';
 import { ControlledInput } from '../../components/ControlledInput';
 import { HeaderForm } from '../../components/HeaderForm';
 import { styles } from './styles';
+import * as Crypto from 'expo-crypto'
 
 type FormData = {
   id: string
@@ -42,16 +44,25 @@ const schema = yup.object({
 })
 
 export function Form() {
+  const navigation = useNavigation()
   const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: yupResolver(schema)
   })
 
   const { getItem, setItem } = useAsyncStorage("@savepass:passwords")
+
   async function handleNew(data: FormData) {
     const id = uuid.v4()
     const name = data.name
     const email = data.email
     const password = data.password
+
+    // const pass_crypto = await Crypto.digestStringAsync(
+    //   Crypto.CryptoDigestAlgorithm.SHA256,
+    //   password
+    // )
+
+    // console.log(pass_crypto)
 
     const newData = {
       id,
@@ -81,6 +92,8 @@ export function Form() {
         position: 'top'
       })
     }
+
+    navigation.navigate("Home")
   }
 
   return (

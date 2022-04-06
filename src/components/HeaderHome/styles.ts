@@ -14,9 +14,9 @@ export const styles = StyleSheet.create({
   button: {
     height: 56,
     width: 56,
-    borderRadius: 50,
-    // borderColor: '#E3E3E3',
-    // borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#E3E3E3',
+    borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -25,10 +25,12 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 12
   },
+
   title: {
     color: '#FFF',
     fontSize: 20
   },
+
   subtitle: {
     color: '#FFF',
     fontSize: 13
@@ -37,8 +39,6 @@ export const styles = StyleSheet.create({
   avatar: {
     width: 56,
     height: 56,
-    // padding: 6,
-    borderRadius: 50,
+    borderRadius: 5,
   }
-
 });

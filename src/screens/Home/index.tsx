@@ -1,15 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useEffect, useState } from 'react';
+import { Alert, FlatList, Text, View } from 'react-native';
 import Toast from 'react-native-toast-message';
-
+import { Button } from '../../components/Button';
 import { Card, CardProps } from '../../components/Card';
 import { HeaderHome } from '../../components/HeaderHome';
-import { useFocusEffect } from '@react-navigation/native';
-
-import { styles } from './styles';
-import { Button } from '../../components/Button';
 import { NotFound } from '../NotFound';
+import { styles } from './styles';
 
 export function Home() {
   const [currentVersion, setCurrentVersion] = useState("");
@@ -30,28 +28,50 @@ export function Home() {
     const previewData = response ? JSON.parse(response) : []
 
     if (id) {
-      const data = previewData.filter((item: CardProps) => item.id !== id)
+      Alert.alert(
+        "Aviso",
+        "Tem certeza que deseja excluir este registro?",
+        [
+          {
+            text: "Cancelar"
+          },
+          {
+            text: "Sim", onPress: () => {
+              const data = previewData.filter((item: CardProps) => item.id !== id)
+              setItem(JSON.stringify(data))
+              handleFetchData()
 
-      setItem(JSON.stringify(data))
-
-      handleFetchData()
-
-      Toast.show({
-        type: 'success',
-        text1: `Registro apagado!`,
-        position: 'top'
-      })
-
+              Toast.show({
+                type: 'success',
+                text1: `Registro apagado!`,
+                position: 'top'
+              })
+            }
+          }
+        ]
+      );
     } else {
-      removeItem()
+      Alert.alert(
+        "Aviso!",
+        "Tem certeza que deseja excluir todos os registros?",
+        [
+          {
+            text: "Cancelar"
+          },
+          {
+            text: "Sim", onPress: () => {
+              removeItem()
+              handleFetchData()
 
-      handleFetchData()
-
-      Toast.show({
-        type: 'success',
-        text1: "Todos os registros foram apagados com sucesso!",
-        position: 'top'
-      })
+              Toast.show({
+                type: 'success',
+                text1: "Todos os registros foram apagados com sucesso!",
+                position: 'top'
+              })
+            }
+          }
+        ]
+      );
     }
   }
 
@@ -64,15 +84,13 @@ export function Home() {
     const numberRest = myArrow.slice(3, myArrow.length)
 
     let version = `${numberPrimary}.${numberSecundary}.${numberRest}`
-
-    console.log(currentVersion)
-
     setCurrentVersion(version)
   }
 
   useFocusEffect(
     useCallback(() => {
       handleFetchData()
+      // console.log(currentVersion)
     }, [])
   )
 
@@ -114,7 +132,7 @@ export function Home() {
       <View style={styles.footer}>
         <Button
           style={!data.length ? styles.buttonDisabled : styles.buttonNotDisabled}
-          title="Limpar lista"
+          title="Lista"
           onPress={() => handleRemove()}
           disabled={!data.length}
         />

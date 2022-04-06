@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Iza Passwords",
-    "slug": "izapasswords",
-    "version": "1.64.9114677884",
+    "name": "Iza Pass",
+    "slug": "izapass",
+    "version": "1.64.9203342241",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#80FC32"
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,7 +22,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#80FC32"
+        "backgroundColor": "#FFFFFF"
       },
       "package": "com.izael_dev.savepass"
     },

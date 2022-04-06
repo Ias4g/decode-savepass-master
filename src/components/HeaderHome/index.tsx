@@ -34,7 +34,7 @@ export function HeaderHome() {
       >
         <MaterialIcons
           name="add"
-          size={42}
+          size={22}
           color="#FFF"
         />
       </TouchableOpacity>
