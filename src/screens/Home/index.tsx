@@ -28,11 +28,11 @@ export function Home() {
 
     if (id) {
       Alert.alert(
-        "Aviso",
+        "Aviso!",
         "Tem certeza que deseja excluir este registro?",
         [
           {
-            text: "Cancelar"
+            text: "Não"
           },
           {
             text: "Sim", onPress: () => {
@@ -51,11 +51,11 @@ export function Home() {
       );
     } else {
       Alert.alert(
-        "Aviso!",
-        "Tem certeza que deseja excluir todos os registros?",
+        "Atenção!",
+        "Você estar prestes a excluir todos os registros. Tem certeza?",
         [
           {
-            text: "Cancelar"
+            text: "Não"
           },
           {
             text: "Sim", onPress: () => {

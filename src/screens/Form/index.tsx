@@ -16,7 +16,6 @@ import { Button } from '../../components/Button';
 import { ControlledInput } from '../../components/ControlledInput';
 import { HeaderForm } from '../../components/HeaderForm';
 import { styles } from './styles';
-import * as Crypto from 'expo-crypto'
 
 type FormData = {
   id: string
