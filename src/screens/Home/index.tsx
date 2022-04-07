@@ -1,6 +1,6 @@
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Alert, FlatList, Text, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { Button } from '../../components/Button';
@@ -10,7 +10,6 @@ import { NotFound } from '../NotFound';
 import { styles } from './styles';
 
 export function Home() {
-  const [currentVersion, setCurrentVersion] = useState("");
   const [data, setData] = useState<CardProps[]>([]);
 
   const { getItem, setItem, removeItem } = useAsyncStorage("@savepass:passwords")
@@ -75,28 +74,11 @@ export function Home() {
     }
   }
 
-  function generateVersion() {
-    const date = Date.now()
-    const myArrow = String(date)
-
-    const numberPrimary = myArrow.slice(0, 1)
-    const numberSecundary = myArrow.slice(1, 3)
-    const numberRest = myArrow.slice(3, myArrow.length)
-
-    let version = `${numberPrimary}.${numberSecundary}.${numberRest}`
-    setCurrentVersion(version)
-  }
-
   useFocusEffect(
     useCallback(() => {
       handleFetchData()
-      // console.log(currentVersion)
     }, [])
   )
-
-  useEffect(() => {
-    generateVersion()
-  }, [])
 
   return (
     <View style={styles.container}>
@@ -136,12 +118,6 @@ export function Home() {
           onPress={() => handleRemove()}
           disabled={!data.length}
         />
-      </View>
-
-      <View>
-        <Text style={styles.version}>
-          Versão: {currentVersion}
-        </Text>
       </View>
     </View>
   );
