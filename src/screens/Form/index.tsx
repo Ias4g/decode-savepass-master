@@ -34,12 +34,12 @@ const schema = yup.object({
   password: yup.string()
     .required("Informe sua senha!")
     .min(6, "A senha deve ter pelo menos 6 caracteres!")
-    .max(12, "A senha deve ter no maximo 12 caracteres!"),
+    .max(20, "A senha deve ter no maximo 12 caracteres!"),
   password_confirm: yup.string()
     .oneOf([yup.ref('password'), null], 'As senhas não conferem!')
     .required("Informe a senha de confirmação!")
     .min(6, "A senha deve ter pelo menos 6 caracteres!")
-    .max(12, "A senha deve ter no maximo 12 caracteres!")
+    .max(20, "A senha deve ter no maximo 12 caracteres!")
 })
 
 export function Form() {
