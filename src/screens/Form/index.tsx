@@ -52,17 +52,8 @@ export function Form() {
 
   async function handleNew(data: FormData) {
     const id = uuid.v4()
-    const name = data.name
-    const email = data.email
-    const password = data.password
-
-    // const pass_crypto = await Crypto.digestStringAsync(
-    //   Crypto.CryptoDigestAlgorithm.SHA256,
-    //   password
-    // )
-
-    // console.log(pass_crypto)
-
+    const { name, email, password } = data
+    
     const newData = {
       id,
       name,
@@ -102,9 +93,7 @@ export function Form() {
     >
       <View style={styles.content}>
         <ScrollView>
-
           <HeaderForm />
-
           <View style={styles.form}>
             <ControlledInput
               name='name'

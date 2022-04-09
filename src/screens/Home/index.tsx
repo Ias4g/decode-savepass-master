@@ -81,7 +81,7 @@ export function Home() {
   )
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} >
       <HeaderHome />
 
       <View style={styles.listHeader}>
@@ -94,22 +94,24 @@ export function Home() {
         </Text>
       </View>
 
-      {data.length > 0 ? (
-        <FlatList
-          data={data}
-          keyExtractor={item => item.id}
-          style={styles.list}
-          contentContainerStyle={styles.listContent}
-          renderItem={({ item }) =>
-            <Card
-              data={item}
-              onPress={() => handleRemove(item.id)}
-            />
-          }
-        />
-      ) : (
-        <NotFound />
-      )}
+      {
+        data.length > 0 ? (
+          <FlatList
+            data={data}
+            keyExtractor={item => item.id}
+            style={styles.list}
+            contentContainerStyle={styles.listContent}
+            renderItem={({ item }) =>
+              <Card
+                data={item}
+                onPress={() => handleRemove(item.id)}
+              />
+            }
+          />
+        ) : (
+          <NotFound />
+        )
+      }
 
       <View style={styles.footer}>
         <Button
@@ -119,6 +121,6 @@ export function Home() {
           disabled={!data.length}
         />
       </View>
-    </View>
+    </View >
   );
 }
