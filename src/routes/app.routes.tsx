@@ -8,22 +8,17 @@ const { Navigator, Screen } = createNativeStackNavigator()
 
 export function AppRoutes() {
     return (
-        <Navigator >
+        <Navigator screenOptions={{
+            headerShown: false
+        }}
+        >
             <Screen
                 name='Home'
                 component={Home}
-                options={{
-                    headerShown: false,
-                    statusBarStyle: 'light'
-                }}
             />
             <Screen
                 name='Form'
                 component={Form}
-                options={{
-                    headerShown: false,
-                    statusBarStyle: 'light'
-                }}
             />
         </Navigator>
     )

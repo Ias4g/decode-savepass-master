@@ -1,7 +1,7 @@
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
-import { Alert, FlatList, Text, View } from 'react-native';
+import { Alert, FlatList, SafeAreaView, StatusBar, Text, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { Button } from '../../components/Button';
 import { Card, CardProps } from '../../components/Card';
@@ -81,7 +81,11 @@ export function Home() {
   )
 
   return (
-    <View style={styles.container} >
+    <SafeAreaView style={styles.container} >
+      <StatusBar
+        backgroundColor="#00A88E"
+      />
+      
       <HeaderHome />
 
       <View style={styles.listHeader}>
@@ -121,6 +125,6 @@ export function Home() {
           disabled={!data.length}
         />
       </View>
-    </View >
+    </SafeAreaView >
   );
 }

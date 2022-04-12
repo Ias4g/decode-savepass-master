@@ -29,6 +29,7 @@ export const styles = StyleSheet.create({
     marginLeft: -32
   },
   button: {
+    color:'#fff',
     zIndex: 100
   }
 });

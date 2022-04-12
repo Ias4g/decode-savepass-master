@@ -2,7 +2,7 @@
   "expo": {
     "name": "Iza Pass",
     "slug": "izapass",
-    "version": "1.64.9788897976",
+    "version": "1.64.9794435403",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.izael_dev.savepass"
+      "package": "com.izael_dev.izapass"
     },
     "web": {
       "favicon": "./assets/favicon.png"

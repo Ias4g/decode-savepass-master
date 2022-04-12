@@ -5,8 +5,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import {
   KeyboardAvoidingView,
-  Platform,
-  ScrollView,
+  Platform, SafeAreaView, ScrollView,
   View
 } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -53,7 +52,7 @@ export function Form() {
   async function handleNew(data: FormData) {
     const id = uuid.v4()
     const { name, email, password } = data
-    
+
     const newData = {
       id,
       name,

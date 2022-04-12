@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, SafeAreaView, StyleSheet } from 'react-native';
 import Logo from '../../../assets/icon.png';
 import { Login } from '../../components/Login';
 import { Register } from '../../components/Register';
@@ -7,7 +7,7 @@ import { AuthContext } from '../../contexts/auth';
 
 
 export function SignIn() {
-    const { hasUser, user } = useContext(AuthContext)
+    const { hasUser } = useContext(AuthContext)
     // console.log(user)
 
     // async function biometric() {
@@ -30,7 +30,7 @@ export function SignIn() {
     // }
 
     return (
-        <View style={styles.centeredView}>
+        <SafeAreaView style={styles.centeredView}>
             <Image
                 source={Logo}
                 style={styles.logo}
@@ -42,7 +42,7 @@ export function SignIn() {
                     <Register />
                 )
             }
-        </View>
+        </SafeAreaView>
     );
 };
 
