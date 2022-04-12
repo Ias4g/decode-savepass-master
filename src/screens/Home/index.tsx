@@ -6,7 +6,7 @@ import Toast from 'react-native-toast-message';
 import { Button } from '../../components/Button';
 import { Card, CardProps } from '../../components/Card';
 import { HeaderHome } from '../../components/HeaderHome';
-import { NotFound } from '../NotFound';
+import { NotFound } from '../../components/NotFound';
 import { styles } from './styles';
 
 export function Home() {

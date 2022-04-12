@@ -1,13 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAsyncStorage } from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Modal, StyleSheet, View } from 'react-native';
-import Toast from 'react-native-toast-message';
 import * as yup from 'yup';
 import { Button } from '../../components/Button';
 import { ControlledInput } from '../../components/ControlledInput';
+import { AuthContext } from '../../contexts/auth';
 
 
 type FormData = {
@@ -26,36 +24,14 @@ const schema = yup.object({
 })
 
 export function Login() {
-    const [modalVisible, setModalVisible] = useState(true);
+    const { verifyLogin, modalVisible } = useContext(AuthContext)
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: yupResolver(schema)
     })
 
-    const navigation = useNavigation()
-    const { getItem, setItem } = useAsyncStorage("@savepass:user")
 
-    async function handleLogin(data: FormData) {
-        try {
-            const response = await getItem()
-            const { email, password } = response ? JSON.parse(response) : []
-
-            if ((data.email === email) && (data.password === password)) {
-                setModalVisible(!modalVisible)
-                navigation.navigate("Home")
-            } else {
-                Toast.show({
-                    type: "error",
-                    text1: "Usuário e/ou Senha Invalidos!",
-                    position: 'top'
-                })
-            }
-        } catch (err) {
-            Toast.show({
-                type: "error",
-                text1: "Ocorreu um erro inesperado ao fazer login!",
-                position: 'top'
-            })
-        }
+    function handleLogin(data: FormData) {
+        verifyLogin(data.email, data.password)
     }
 
     return (

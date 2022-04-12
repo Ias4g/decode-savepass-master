@@ -1,11 +1,11 @@
 import Toast from 'react-native-toast-message';
-import { Routes } from './src/routes';
+import { Index } from './src';
 
 export default function App() {
   return (
     <>
-      <Routes />
+      <Index />
       <Toast />
     </>
   );
-}
+}  

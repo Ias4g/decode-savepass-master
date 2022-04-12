@@ -1,12 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAsyncStorage } from '@react-native-async-storage/async-storage';
-import { useState } from 'react';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Modal, StyleSheet, View } from 'react-native';
-import Toast from 'react-native-toast-message';
 import * as yup from 'yup';
 import { Button } from '../../components/Button';
 import { ControlledInput } from '../../components/ControlledInput';
+import { AuthContext } from '../../contexts/auth';
 
 
 type FormData = {
@@ -35,39 +34,20 @@ const schema = yup.object({
 })
 
 export function Register() {
-    const [modalVisible, setModalVisible] = useState(false);
+    const { registerUser, modalVisible } = useContext(AuthContext)
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: yupResolver(schema)
     })
 
-    const { setItem } = useAsyncStorage("@savepass:user")
-
     async function handleRegister(data: FormData) {
-        try {
-            console.log(data)
-            // setIsUser(true)
-            // setItem(JSON.stringify(data))
-            setModalVisible(!modalVisible)
-
-            Toast.show({
-                type: "success",
-                text1: "Usuário cadastrado com sucesso",
-                position: 'top'
-            })
-        } catch (err) {
-            Toast.show({
-                type: "error",
-                text1: "Erro ao cadastrar Usuário",
-                position: 'top'
-            })
-        }
+        registerUser(data)
     }
 
     return (
         <Modal
             animationType="slide"
             transparent={true}
-            visible={!modalVisible}
+            visible={modalVisible}
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>

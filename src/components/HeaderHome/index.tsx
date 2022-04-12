@@ -24,7 +24,7 @@ export function HeaderHome() {
       setUser(user)
       setAvatarUrl(avatar)
 
-      console.log(response)
+      // console.log(response)
     } catch (error) {
       Alert.alert(`Erro ao buscar dados ${error}`)
     }
