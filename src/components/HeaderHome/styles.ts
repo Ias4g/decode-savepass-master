@@ -1,24 +1,25 @@
 import { StyleSheet } from 'react-native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 export const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 178,
+    // height: 178,
     backgroundColor: '#00A88E',
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
+    paddingTop: getStatusBarHeight(),
+    paddingBottom: getStatusBarHeight()
   },
 
-  button: {
-    height: 56,
+  avatar: {
     width: 56,
-    borderRadius: 5,
-    borderColor: '#E3E3E3',
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: 56,
+    borderColor: '#FFF',
+    borderWidth: 2,
+    borderRadius: 8
   },
 
   user: {
@@ -36,9 +37,13 @@ export const styles = StyleSheet.create({
     fontSize: 13
   },
 
-  avatar: {
-    width: 56,
+  button: {
     height: 56,
-    borderRadius: 5,
+    width: 56,
+    borderRadius: 8,
+    borderColor: '#E3E3E3',
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });

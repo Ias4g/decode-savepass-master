@@ -8,7 +8,7 @@ import { AuthContext } from '../../contexts/auth';
 
 export function SignIn() {
     const { hasUser, user } = useContext(AuthContext)
-    console.log(user)
+    // console.log(user)
 
     // async function biometric() {
     //     const compatible = await LocalAuthentication.hasHardwareAsync()

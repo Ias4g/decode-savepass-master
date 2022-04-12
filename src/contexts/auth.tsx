@@ -32,19 +32,24 @@ export const AuthContext = createContext<AuthContextData>(
 
 export const AuthProvider: React.FC = ({ children }) => {
     const [user, setUser] = useState<UserData | null>(null)
-    const [hasUser, setHasUser] = useState(true)
+    const [hasUser, setHasUser] = useState(false)
     const [userLogged, setUserLogged] = useState(false)
-    const [modalVisible, setModalVisible] = useState(true);
+    const [modalVisible, setModalVisible] = useState(false);
     // const [loading, setLoading] = useState(true)
 
     const { getItem, setItem } = useAsyncStorage("@savepass:user")
 
     async function signIn() {
         const response = await getItem()
-        const res = response ? JSON.parse(response) : []
+        const res = response ? JSON.parse(response) : null
 
         setUser(res)
-        res && setHasUser(true)
+
+        if (res !== null) {
+            setHasUser(true)
+        } else {
+            setHasUser(false)
+        }
         // console.log(res)
     }
 
@@ -76,8 +81,11 @@ export const AuthProvider: React.FC = ({ children }) => {
     async function registerUser(data: FormData) {
         try {
             setItem(JSON.stringify(data))
-            setModalVisible(false)
+            setModalVisible(!modalVisible)
+
             signIn()
+            setHasUser(true)
+
             Toast.show({
                 type: "success",
                 text1: "Usuário cadastrado com sucesso",
@@ -109,6 +117,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         signIn()
+        setModalVisible(!modalVisible)
     }, [])
 
     return (

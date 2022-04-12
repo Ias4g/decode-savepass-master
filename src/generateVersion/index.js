@@ -8,7 +8,7 @@ function generateVersion() {
 
     let versionApp = `${numberPrimary}.${numberSecundary}.${numberRest}`
 
-    // console.log(versionApp)
+    console.log(versionApp)
 }
 
 generateVersion()
