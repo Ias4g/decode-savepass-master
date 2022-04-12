@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Image, SafeAreaView, StyleSheet } from 'react-native';
-import Logo from '../../../assets/icon.png';
+import Logo from '../../assets/icon.png';
 import { Login } from '../../components/Login';
 import { Register } from '../../components/Register';
 import { AuthContext } from '../../contexts/auth';

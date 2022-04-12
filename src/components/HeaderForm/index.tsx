@@ -17,7 +17,7 @@ export function HeaderForm() {
         <MaterialIcons
           name="chevron-left"
           size={32}
-          color="#1967FB"
+          color="#FFF"
         />
       </TouchableOpacity>
 

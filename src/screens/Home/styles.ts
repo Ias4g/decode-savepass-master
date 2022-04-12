@@ -8,22 +8,22 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  buttonNotDisabled: {
+  button: {
     height: 56,
     width: '100%',
-    backgroundColor: '#FDB924',
-    justifyContent: 'center',
+    borderRadius: 8,
     alignItems: 'center',
-    borderRadius: 50
+    justifyContent: 'center',
+    backgroundColor: '#FDB924',
   },
 
   buttonDisabled: {
     height: 56,
     width: '100%',
-    justifyContent: 'center',
+    borderRadius: 8,
     alignItems: 'center',
-    borderRadius: 50,
-    backgroundColor: '#D8D8D8',
+    justifyContent: 'center',
+    backgroundColor: '#D8D8D8'
   },
 
   title: {
@@ -31,6 +31,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#3D434D'
   },
+
   listHeader: {
     width: '100%',
     flexDirection: 'row',

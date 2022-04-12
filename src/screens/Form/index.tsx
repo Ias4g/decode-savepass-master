@@ -5,8 +5,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import {
   KeyboardAvoidingView,
-  Platform, SafeAreaView, ScrollView,
-  View
+  Platform, ScrollView, View
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import uuid from 'react-native-uuid';
@@ -90,6 +89,10 @@ export function Form() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
+      {/* <StatusBar
+        animated={false}
+        backgroundColor="#00A88E"
+      /> */}
       <View style={styles.content}>
         <ScrollView>
           <HeaderForm />
