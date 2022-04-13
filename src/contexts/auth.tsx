@@ -1,136 +1,100 @@
-import { useAsyncStorage } from '@react-native-async-storage/async-storage';
-import React, { createContext, useEffect, useState } from 'react';
-import Toast from 'react-native-toast-message';
-
+import { useAsyncStorage } from "@react-native-async-storage/async-storage";
+import React, { createContext, useEffect, useState } from "react";
+import Toast from "react-native-toast-message";
 
 type UserData = {
-    name: string
-    url_avatar: string
-}
-
-type FormData = {
-    name: string
-    url_avatar: string
-    email: string
-    password: string
-    password_confirm: string
-}
+  name: string;
+  url_avatar: string;
+};
 
 type AuthContextData = {
-    userLogged: boolean
-    hasUser: boolean
-    modalVisible: boolean
-    user: UserData | null
-    signIn(): Promise<void>
-    verifyLogin(email: string, pass: string): void
-    registerUser(data: FormData): void
-}
+  hasUser: boolean;
+  userLogged: boolean;
+  user: UserData | null;
+  modalVisibleLogin: boolean;
+  modalVisibleRegister: boolean;
+  getUser(): Promise<void>;
+  verifyLogin(email: string, pass: string): void;
+};
 
 export const AuthContext = createContext<AuthContextData>(
-    {} as AuthContextData
-)
+  {} as AuthContextData
+);
 
 export const AuthProvider: React.FC = ({ children }) => {
-    const [user, setUser] = useState<UserData | null>(null)
-    const [hasUser, setHasUser] = useState(false)
-    const [userLogged, setUserLogged] = useState(false)
-    const [modalVisible, setModalVisible] = useState(false);
-    // const [loading, setLoading] = useState(true)
+  const [userLogged, setUserLogged] = useState(false);
+  const [user, setUser] = useState<UserData | null>(null);
+  const [modalVisibleRegister, setModalVisibleRegister] = useState(false);
+  const [modalVisibleLogin, setModalVisibleLogin] = useState(false);
 
-    const { getItem, setItem } = useAsyncStorage("@savepass:user")
+  const { getItem, removeItem } = useAsyncStorage("@savepass:user");
 
-    async function signIn() {
-        const response = await getItem()
-        const res = response ? JSON.parse(response) : null
+  async function getUser() {
+    // await removeItem()
+    const response = await getItem();
 
-        setUser(res)
+    response ? setModalVisibleLogin(true) : setModalVisibleRegister(true);
 
-        if (res !== null) {
-            setHasUser(true)
-        } else {
-            setHasUser(false)
-        }
-        // console.log(res)
+    const res = response ? JSON.parse(response) : null;
+    setUser(res);
+  }
+
+  async function verifyLogin(email: string, pass: string) {
+    try {
+      const response = await getItem();
+      const newRespose = response ? JSON.parse(response) : null;
+
+      if (newRespose.email === email && newRespose.password === pass) {
+        setUserLogged(true);
+      } else {
+        setUserLogged(false);
+        Toast.show({
+          type: "error",
+          text1: "Usuário e/ou Senha Invalidos!",
+          position: "top",
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Ocorreu um erro inesperado ao fazer login!",
+        position: "top",
+      });
     }
+  }
 
-    async function verifyLogin(email: string, pass: string) {
-        try {
-            const response = await getItem()
-            const newRespose = response ? JSON.parse(response) : null
+  // if (loading) {
+  //     return (
+  //         <View style={{
+  //             flex: 1,
+  //             justifyContent: 'center',
+  //             alignItems: 'center'
+  //         }}>
+  //             <ActivityIndicator
+  //                 size='large'
+  //                 color='#000000'
+  //             />
+  //         </View>
+  //     )
+  // }
 
-            if ((newRespose.email === email) && (newRespose.password === pass)) {
-                setUserLogged(true)
-            } else {
-                setUserLogged(false)
-                Toast.show({
-                    type: "error",
-                    text1: "Usuário e/ou Senha Invalidos!",
-                    position: 'top'
-                })
-            }
-        } catch (error) {
-            Toast.show({
-                type: "error",
-                text1: "Ocorreu um erro inesperado ao fazer login!",
-                position: 'top'
-            })
-        }
+  useEffect(() => {
+    getUser();
+  }, []);
 
-    }
-
-    async function registerUser(data: FormData) {
-        try {
-            setItem(JSON.stringify(data))
-            setModalVisible(!modalVisible)
-
-            signIn()
-            setHasUser(true)
-
-            Toast.show({
-                type: "success",
-                text1: "Usuário cadastrado com sucesso",
-                position: 'top'
-            })
-        } catch (err) {
-            Toast.show({
-                type: "error",
-                text1: "Erro ao cadastrar Usuário",
-                position: 'top'
-            })
-        }
-    }
-
-    // if (loading) {
-    //     return (
-    //         <View style={{
-    //             flex: 1,
-    //             justifyContent: 'center',
-    //             alignItems: 'center'
-    //         }}>
-    //             <ActivityIndicator
-    //                 size='large'r
-    //                 color='#000000'
-    //             />
-    //         </View>
-    //     )
-    // }
-
-    useEffect(() => {
-        signIn()
-        setModalVisible(!modalVisible)
-    }, [])
-
-    return (
-        <AuthContext.Provider value={{
-            userLogged,
-            hasUser,
-            user,
-            modalVisible,
-            signIn,
-            verifyLogin,
-            registerUser
-        }}>
-            {children}
-        </AuthContext.Provider >
-    )
-}
+  return (
+    <AuthContext.Provider
+      value={{
+        hasUser: !!user,
+        userLogged,
+        user,
+        modalVisibleLogin,
+        modalVisibleRegister,
+        getUser,
+        verifyLogin,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};

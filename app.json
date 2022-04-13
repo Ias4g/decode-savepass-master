@@ -2,13 +2,13 @@
   "expo": {
     "name": "Iza Pass",
     "slug": "izapass",
-    "version": "1.64.9794435403",
+    "version": "1.64.9891190895",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#FFFFFF"
+      "backgroundColor": "#FDB924"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,7 +22,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#FDB924"
       },
       "package": "com.izael_dev.izapass"
     },
