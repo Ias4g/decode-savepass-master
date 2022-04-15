@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet } from "react-native";
 import { Login } from "../../components/Login";
 import { Register } from "../../components/Register";
 import { AuthContext } from "../../contexts/auth";
@@ -28,6 +28,11 @@ export function SignIn() {
 
   return (
     <SafeAreaView style={styles.centeredView}>
+      <StatusBar
+        animated={false}
+        barStyle='dark-content'
+        backgroundColor='#000'
+      />
       {hasUser ? <Login /> : <Register />}
     </SafeAreaView>
   );

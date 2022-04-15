@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     paddingHorizontal: 24,
-    paddingTop: getStatusBarHeight() + 42,
+    paddingTop: getStatusBarHeight(),
     paddingBottom: getStatusBarHeight(),
     marginBottom: 24
   },
@@ -21,11 +21,13 @@ export const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 20,
+    fontSize: 22,
     color: '#FFFFFF',
     fontWeight: 'bold',
     flex: 1,
-    textAlign: 'center'
+    marginLeft: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   button: {

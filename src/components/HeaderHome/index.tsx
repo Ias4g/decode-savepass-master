@@ -18,7 +18,7 @@ export function HeaderHome() {
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: user?.url_avatar ? user.url_avatar : avatar }}
+        source={user?.url_avatar ? { uri: user?.url_avatar } : avatar}
         style={styles.avatar}
       />
 

@@ -9,7 +9,6 @@ const { Navigator, Screen } = createNativeStackNavigator()
 export function AppRoutes() {
     return (
         <Navigator screenOptions={{
-            statusBarStyle: 'light',
             headerShown: false
         }}
         >
