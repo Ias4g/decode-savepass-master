@@ -1,4 +1,4 @@
-import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
@@ -41,7 +41,7 @@ export function Login() {
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={styles.circle}>
-            <MaterialIcons name="app-registration" size={54} color="#3D434D" />
+            <AntDesign name="login" size={42} color="#3D434D" />
           </View>
           <Text style={styles.circleTitle}>Faça seu login</Text>
           <View style={styles.form}>

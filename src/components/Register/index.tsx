@@ -1,4 +1,4 @@
-import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { useContext } from "react";
@@ -78,7 +78,7 @@ export function Register() {
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={styles.circle}>
-            <MaterialIcons name="app-registration" size={54} color="#3D434D" />
+            <AntDesign name="form" size={25} color="#3D434D" />
           </View>
           <Text style={styles.circleTitle}>Cadastre-se</Text>
           <View style={styles.form}>
@@ -125,7 +125,6 @@ export function Register() {
               error={errors.password_confirm}
             />
           </View>
-
           <Button title="Entrar" onPress={handleSubmit(registerUser)} />
         </View>
       </View>
@@ -159,9 +158,9 @@ const styles = StyleSheet.create({
   },
 
   circle: {
-    width: 90,
-    height: 90,
-    marginTop: -65,
+    width: 70,
+    height: 70,
+    marginTop: -55,
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",

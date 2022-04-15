@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
-    backgroundColor: "#FDB924",
+    // backgroundColor: "#FDB924",
+    backgroundColor: '#000',
   },
 });

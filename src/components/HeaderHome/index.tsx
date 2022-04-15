@@ -2,6 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useContext } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import avatar from '../../assets/user-default.png';
 import { AuthContext } from '../../contexts/auth';
 import { styles } from './styles';
 
@@ -17,7 +18,7 @@ export function HeaderHome() {
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: user?.url_avatar }}
+        source={{ uri: user?.url_avatar ? user.url_avatar : avatar }}
         style={styles.avatar}
       />
 

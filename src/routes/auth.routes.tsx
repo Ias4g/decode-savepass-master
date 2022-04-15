@@ -8,6 +8,7 @@ export function AuthRoutes() {
     return (
         <Navigator
             screenOptions={{
+                statusBarStyle: 'dark',
                 headerShown: false
             }}
         >
