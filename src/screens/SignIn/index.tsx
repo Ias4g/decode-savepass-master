@@ -30,7 +30,7 @@ export function SignIn() {
     <SafeAreaView style={styles.centeredView}>
       <StatusBar
         animated={false}
-        barStyle='dark-content'
+        barStyle='light-content'
         backgroundColor='#000'
       />
       {hasUser ? <Login /> : <Register />}
