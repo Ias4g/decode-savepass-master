@@ -2,7 +2,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Modal, StyleSheet, Text, View } from "react-native";
+import { Modal, StyleSheet, Text, View, } from "react-native";
 import * as yup from "yup";
 import { Button } from "../../components/Button";
 import { ControlledInput } from "../../components/ControlledInput";
@@ -37,6 +37,7 @@ export function Login() {
   }
 
   return (
+
     <Modal animationType="slide" transparent={true} visible={modalVisibleLogin}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
 
   modalView: {

@@ -1,39 +1,70 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { SafeAreaView, StatusBar, StyleSheet } from "react-native";
+import Animated, {
+  Easing, Extrapolate, interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from 'react-native-reanimated';
+import logo from '../../assets/logo.png';
 import { Login } from "../../components/Login";
 import { Register } from "../../components/Register";
 import { AuthContext } from "../../contexts/auth";
 
 export function SignIn() {
   const { hasUser } = useContext(AuthContext);
+  const logoPosition = useSharedValue(-100)
+  const textPosition = useSharedValue(30)
 
-  // async function biometric() {
-  //     const compatible = await LocalAuthentication.hasHardwareAsync()
-  //     if (compatible) {
-  //         const biometricRecords = await LocalAuthentication.isEnrolledAsync()
-  //         if (biometricRecords) {
-  //             const result = await LocalAuthentication.authenticateAsync()
+  const logoStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: logoPosition.value }],
+      opacity: interpolate(
+        logoPosition.value,
+        [-100, 0],
+        [0, 1],
+        Extrapolate.CLAMP
+      )
+    }
+  })
+  const textStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: textPosition.value }],
+      opacity: interpolate(
+        textPosition.value,
+        [30, 0],
+        [0, 1],
+        Extrapolate.CLAMP
+      )
+    }
+  })
 
-  //             if (result.success) {
-  //                 // setModalVisible(false)
-  //                 navigation.navigate("Home")
-  //             } else {
-  //                 await LocalAuthentication.cancelAuthenticate()
-  //             }
-  //         } else {
-  //             Alert.alert("Biometria não cadastrada ou não encontrada.")
-  //         }
-  //     }
-  // }
+  useEffect(() => {
+    logoPosition.value = withTiming(0, {
+      duration: 500
+    }, () => {
+      textPosition.value = withTiming(0, {
+        duration: 1000,
+        easing: Easing.bounce
+      })
+    })
+  }, [])
 
   return (
     <SafeAreaView style={styles.centeredView}>
       <StatusBar
-        animated={false}
+        animated={true}
         barStyle='light-content'
         backgroundColor='#000'
       />
-      {hasUser ? <Login /> : <Register />}
+
+      {hasUser ? (
+        <>
+          <Animated.Image source={logo} style={[styles.logo, logoStyle]} />
+          <Animated.Text style={[styles.description, textStyle]}>Bem-vindo ao Iza Pass</Animated.Text>
+          <Login />
+        </>
+      ) : <Register />}
     </SafeAreaView>
   );
 }
@@ -41,10 +72,21 @@ export function SignIn() {
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 20,
-    // backgroundColor: "#FDB924",
+    justifyContent: 'center',
     backgroundColor: '#000',
   },
+
+  logo: {
+    width: 156,
+    height: 156,
+    marginBottom: 40
+  },
+
+  description: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 24,
+    marginBottom: 80
+  }
 });

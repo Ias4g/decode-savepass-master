@@ -2,12 +2,6 @@ import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import * as LocalAuthentication from 'expo-local-authentication';
 import React, { createContext, useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
-import { ToastMessage } from "../components/Info";
-
-type ToastMessageData = {
-  message: string;
-  isVisible: boolean;
-};
 
 type UserData = {
   name: string;
@@ -32,8 +26,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [userLogged, setUserLogged] = useState(false);
   const [user, setUser] = useState<UserData | null>(null);
   const [modalVisibleRegister, setModalVisibleRegister] = useState(false);
-  const [modalVisibleLogin, setModalVisibleLogin] = useState(false);
-  const [toastMessage, setToastMessage] = useState({} as ToastMessageData)
+  const [modalVisibleLogin, setModalVisibleLogin] = useState(false)
 
   const { getItem, removeItem } = useAsyncStorage("@savepass:user");
 
@@ -41,7 +34,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     // await removeItem()
     const response = await getItem();
 
-    response ? setModalVisibleLogin(true) : setModalVisibleRegister(true);
+    !response && setModalVisibleRegister(true);
 
     const res = response ? JSON.parse(response) : null;
     setUser(res);
@@ -60,18 +53,29 @@ export const AuthProvider: React.FC = ({ children }) => {
         if (result.success) {
           setUserLogged(true);
         } else {
-          await LocalAuthentication.cancelAuthenticate()
-          setToastMessage({
-            message: String(result.warning),
-            isVisible: true
+          LocalAuthentication.cancelAuthenticate()
+          setModalVisibleLogin(true)
+          Toast.show({
+            type: "error",
+            text1: 'Impressão digital cancelada!',
+            position: "top",
           })
         }
       } else {
-        setToastMessage({
-          message: "Biometria não cadastrada ou não encontrada.!",
-          isVisible: true
+        setModalVisibleLogin(true)
+        Toast.show({
+          type: "error",
+          text1: "Biometria não cadastrada ou não encontrada!",
+          position: "top",
         })
       }
+    } else {
+      setModalVisibleLogin(true)
+      Toast.show({
+        type: "error",
+        text1: "Aparelho não compativel com impressão digital!",
+        position: "top",
+      })
     }
   }
 
@@ -104,28 +108,18 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <>
-      {
-        toastMessage.isVisible && (
-          <ToastMessage
-            visible={toastMessage.isVisible}
-            message={toastMessage.message}
-          />
-        )
-      }
-      <AuthContext.Provider
-        value={{
-          hasUser: !!user,
-          userLogged,
-          user,
-          modalVisibleLogin,
-          modalVisibleRegister,
-          getUser,
-          verifyLogin,
-        }}
-      >
-        {children}
-      </AuthContext.Provider>
-    </>
+    <AuthContext.Provider
+      value={{
+        hasUser: !!user,
+        userLogged,
+        user,
+        modalVisibleLogin,
+        modalVisibleRegister,
+        getUser,
+        verifyLogin,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 };

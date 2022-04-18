@@ -90,7 +90,7 @@ export function Form() {
       style={styles.container}
     >
       <StatusBar
-        animated={false}
+        animated={true}
         barStyle='light-content'
         backgroundColor='#00A88E'
       />

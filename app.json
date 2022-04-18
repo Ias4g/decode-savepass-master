@@ -5,11 +5,7 @@
     "version": "1.65.0069728391 15-04-22",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#000000"
-    },
+  
     "updates": {
       "fallbackToCacheTimeout": 0
     },
