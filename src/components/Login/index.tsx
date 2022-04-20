@@ -1,8 +1,7 @@
-import { AntDesign } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Modal, StyleSheet, Text, View, } from "react-native";
+import { Modal, StyleSheet, View } from "react-native";
 import * as yup from "yup";
 import { Button } from "../../components/Button";
 import { ControlledInput } from "../../components/ControlledInput";
@@ -37,14 +36,9 @@ export function Login() {
   }
 
   return (
-
     <Modal animationType="slide" transparent={true} visible={modalVisibleLogin}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <View style={styles.circle}>
-            <AntDesign name="login" size={42} color="#3D434D" />
-          </View>
-          <Text style={styles.circleTitle}>Faça seu login</Text>
           <View style={styles.form}>
             <ControlledInput
               name="email"
@@ -85,6 +79,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     shadowRadius: 20,
     textAlign: "center",
+    marginTop: 180,
     shadowColor: "#000",
     alignItems: "center",
     shadowOpacity: 0.25,
@@ -94,24 +89,6 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-  },
-
-  circle: {
-    width: 90,
-    height: 90,
-    marginTop: -65,
-    borderRadius: 100,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FDB924",
-    borderColor: "#F2F3F5",
-    borderWidth: 4,
-  },
-
-  circleTitle: {
-    fontWeight: "bold",
-    color: "#3D434D",
-    fontSize: 24,
   },
 
   form: {

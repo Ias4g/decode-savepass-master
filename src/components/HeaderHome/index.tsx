@@ -1,6 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { useContext } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useCallback, useContext } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from '../../contexts/auth';
 import { styles } from './styles';
@@ -8,11 +8,17 @@ import { styles } from './styles';
 
 export function HeaderHome() {
   const navigation = useNavigation();
-  const { user } = useContext(AuthContext)
+  const { user, getUser } = useContext(AuthContext)
 
   function handleAdd() {
     navigation.navigate("Form", {});
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      getUser()
+    }, [])
+  )
 
   return (
     <View style={styles.container}>

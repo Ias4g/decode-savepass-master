@@ -58,13 +58,11 @@ export function SignIn() {
         backgroundColor='#000'
       />
 
-      {hasUser ? (
-        <>
-          <Animated.Image source={logo} style={[styles.logo, logoStyle]} />
-          <Animated.Text style={[styles.description, textStyle]}>Bem-vindo ao Iza Pass</Animated.Text>
-          <Login />
-        </>
-      ) : <Register />}
+      <Animated.Image source={logo} style={[styles.logo, logoStyle]} />
+
+      <Animated.Text style={[styles.description, textStyle]}>Bem-vindo ao Iza Pass</Animated.Text>
+
+      {hasUser ? <Login /> : <Register />}
     </SafeAreaView>
   );
 }
@@ -73,14 +71,14 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     alignItems: "center",
-    justifyContent: 'center',
     backgroundColor: '#000',
   },
 
   logo: {
     width: 156,
     height: 156,
-    marginBottom: 40
+    marginTop: 50,
+    marginBottom: 30
   },
 
   description: {

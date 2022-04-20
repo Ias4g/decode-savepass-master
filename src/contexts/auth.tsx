@@ -10,11 +10,12 @@ type UserData = {
 
 type AuthContextData = {
   hasUser: boolean;
-  userLogged: boolean;
+  userLogged: boolean
   user: UserData | null;
+  getUser(): Promise<void>;
   modalVisibleLogin: boolean;
   modalVisibleRegister: boolean;
-  getUser(): Promise<void>;
+  setUserLogged(bool: boolean): void
   verifyLogin(email: string, pass: string): void;
 };
 
@@ -37,11 +38,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     !response && setModalVisibleRegister(true);
 
     const res = response ? JSON.parse(response) : null;
-    setUser(res);
 
-    if (response !== null) {
-      biometric()
-    }
+    setUser(res);
   }
 
   async function biometric() {
@@ -55,11 +53,6 @@ export const AuthProvider: React.FC = ({ children }) => {
         } else {
           LocalAuthentication.cancelAuthenticate()
           setModalVisibleLogin(true)
-          Toast.show({
-            type: "error",
-            text1: 'Impressão digital cancelada!',
-            position: "top",
-          })
         }
       } else {
         setModalVisibleLogin(true)
@@ -105,18 +98,23 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     getUser()
+
+    if (user) {
+      biometric()
+    }
   }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        hasUser: !!user,
-        userLogged,
         user,
+        getUser,
+        userLogged,
+        verifyLogin,
+        setUserLogged,
+        hasUser: !!user,
         modalVisibleLogin,
         modalVisibleRegister,
-        getUser,
-        verifyLogin,
       }}
     >
       {children}

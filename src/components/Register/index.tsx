@@ -1,9 +1,8 @@
-import { AntDesign } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Modal, StyleSheet, Text, View } from "react-native";
+import { KeyboardAvoidingView, Modal, Platform, StyleSheet, View } from "react-native";
 import Toast from "react-native-toast-message";
 import * as yup from "yup";
 import { Button } from "../../components/Button";
@@ -39,7 +38,7 @@ const schema = yup.object({
 });
 
 export function Register() {
-  const { modalVisibleRegister, getUser } = useContext(AuthContext);
+  const { modalVisibleRegister, setUserLogged } = useContext(AuthContext);
   const {
     control,
     handleSubmit,
@@ -52,9 +51,8 @@ export function Register() {
 
   async function registerUser(data: FormData) {
     try {
-      setItem(JSON.stringify(data));
-      getUser();
-
+      await setItem(JSON.stringify(data))
+      setUserLogged(true)
       Toast.show({
         type: "success",
         text1: "Usuário cadastrado com sucesso",
@@ -70,69 +68,74 @@ export function Register() {
   }
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisibleRegister}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <View style={styles.circle}>
-            <AntDesign name="form" size={25} color="#3D434D" />
-          </View>
-          <Text style={styles.circleTitle}>Cadastre-se</Text>
-          <View style={styles.form}>
-            <ControlledInput
-              name="name"
-              control={control}
-              icon="person"
-              placeholder="Insira seu nome."
-              error={errors.name}
-            />
-            <ControlledInput
-              name="url_avatar"
-              control={control}
-              icon="link"
-              placeholder="Insira a url do seu avatar"
-              autoCapitalize="none"
-              error={errors.url_avatar}
-            />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisibleRegister}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.form}>
+              <ControlledInput
+                name="name"
+                control={control}
+                icon="person"
+                placeholder="Insira seu nome."
+                error={errors.name}
+              />
+              <ControlledInput
+                name="url_avatar"
+                control={control}
+                icon="link"
+                placeholder="Insira a url do seu avatar"
+                autoCapitalize="none"
+                error={errors.url_avatar}
+              />
 
-            <ControlledInput
-              name="email"
-              control={control}
-              icon="email"
-              placeholder="Insira seu e-mail."
-              keyboardType="email-address"
-              autoCapitalize="none"
-              error={errors.email}
-            />
+              <ControlledInput
+                name="email"
+                control={control}
+                icon="email"
+                placeholder="Insira seu e-mail."
+                keyboardType="email-address"
+                autoCapitalize="none"
+                error={errors.email}
+              />
 
-            <ControlledInput
-              name="password"
-              control={control}
-              icon="lock"
-              placeholder="Insira sua senha."
-              secureTextEntry
-              error={errors.password}
-            />
-            <ControlledInput
-              name="password_confirm"
-              control={control}
-              icon="lock"
-              placeholder="Insira sua senha."
-              secureTextEntry
-              error={errors.password_confirm}
-            />
+              <ControlledInput
+                name="password"
+                control={control}
+                icon="lock"
+                placeholder="Insira sua senha."
+                secureTextEntry
+                error={errors.password}
+              />
+              <ControlledInput
+                name="password_confirm"
+                control={control}
+                icon="lock"
+                placeholder="Insira sua senha."
+                secureTextEntry
+                error={errors.password_confirm}
+              />
+            </View>
+            <Button title="Cadastrar" onPress={handleSubmit(registerUser)} />
           </View>
-          <Button title="Entrar" onPress={handleSubmit(registerUser)} />
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#F2F3F5',
+    alignItems: 'center'
+  },
   centeredView: {
     flex: 1,
     justifyContent: "center",
@@ -146,6 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     shadowRadius: 20,
     textAlign: "center",
+    marginTop: 156,
     shadowColor: "#000",
     alignItems: "center",
     shadowOpacity: 0.25,
@@ -157,26 +161,8 @@ const styles = StyleSheet.create({
     },
   },
 
-  circle: {
-    width: 70,
-    height: 70,
-    marginTop: -55,
-    borderRadius: 100,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FDB924",
-    borderColor: "#F2F3F5",
-    borderWidth: 4,
-  },
-
-  circleTitle: {
-    fontWeight: "bold",
-    color: "#3D434D",
-    fontSize: 24,
-  },
-
   form: {
     width: "100%",
-    marginVertical: 20,
+    marginBottom: 20,
   },
 });

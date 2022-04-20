@@ -2,10 +2,14 @@
   "expo": {
     "name": "Iza Pass",
     "slug": "izapass",
-    "version": "1.65.0240321790 17-04-22",
+    "version": "1.65.0415410112 19-04-22",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-  
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
