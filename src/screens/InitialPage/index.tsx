@@ -13,12 +13,12 @@ export function InitialPage() {
         barStyle='light-content'
         backgroundColor='#000'
       />
-      <Text>Imagem png</Text>
+      <Text style={styles.description}>Imagem png</Text>
       <Image
         source={logoPng}
       />
 
-      <Text>Imagem svg</Text>
+      <Text style={styles.description}>Imagem svg</Text>
       <Image
         source={logoSvg}
       />

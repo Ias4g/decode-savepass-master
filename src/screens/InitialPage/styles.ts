@@ -4,20 +4,20 @@ export const styles = StyleSheet.create({
     centeredView: {
         flex: 1,
         alignItems: "center",
-        backgroundColor: '#000',
+        backgroundColor: '#FFFFFF',
     },
 
-    logo: {
-        width: 156,
-        height: 156,
-        marginTop: 50,
-        marginBottom: 30
-    },
+    // logo: {
+    //     width: 156,
+    //     height: 156,
+    //     marginTop: 50,
+    //     marginBottom: 30
+    // },
 
     description: {
-        color: '#fff',/*  */
+        color: '#000000',
         fontWeight: 'bold',
         fontSize: 24,
-        marginBottom: 80
+        // marginBottom: 80
     }
 });
