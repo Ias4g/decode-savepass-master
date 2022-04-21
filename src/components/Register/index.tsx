@@ -52,6 +52,7 @@ export function Register() {
   async function registerUser(data: FormData) {
     try {
       await setItem(JSON.stringify(data))
+      // setupdateDatas(true)
       setUserLogged(true)
       Toast.show({
         type: "success",

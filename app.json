@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "Iza Pass",
+    "name": "Iza Pass 20 Abril 2022",
     "slug": "izapass",
-    "version": "1.65.0415410112 19-04-22",
+    "version": "1.65.0501838290",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#000000"
     },
     "updates": {

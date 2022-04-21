@@ -34,12 +34,13 @@ export const AuthProvider: React.FC = ({ children }) => {
   async function getUser() {
     // await removeItem()
     const response = await getItem();
-
-    !response && setModalVisibleRegister(true);
-
-    const res = response ? JSON.parse(response) : null;
-
-    setUser(res);
+    if (response) {
+      const res = response ? JSON.parse(response) : null;
+      setUser(res)
+      return res
+    } else {
+      setModalVisibleRegister(true)
+    }
   }
 
   async function biometric() {
@@ -97,11 +98,14 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   useEffect(() => {
-    getUser()
-
-    if (user) {
-      biometric()
+    async function load() {
+      const rss = await getUser()
+      if (rss) {
+        biometric()
+      }
     }
+
+    load()
   }, []);
 
   return (
