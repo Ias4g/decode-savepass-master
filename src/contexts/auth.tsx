@@ -13,6 +13,7 @@ type AuthContextData = {
   userLogged: boolean
   user: UserData | null;
   getUser(): Promise<void>;
+  biometric(): Promise<void>;
   modalVisibleLogin: boolean;
   modalVisibleRegister: boolean;
   setUserLogged(bool: boolean): void
@@ -113,6 +114,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       value={{
         user,
         getUser,
+        biometric,
         userLogged,
         verifyLogin,
         setUserLogged,

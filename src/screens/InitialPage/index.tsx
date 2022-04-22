@@ -1,27 +1,34 @@
-import React from "react";
-import { Image, SafeAreaView, StatusBar, Text } from "react-native";
-import logoPng from '../assets/login-screen.png';
-import logoSvg from '../assets/login-screen.svg';
+import React, { useContext } from "react";
+import { Image, SafeAreaView, StatusBar, Text, View } from "react-native";
+import logoPng from '../../assets/login-screen.png';
+import { Button } from "../../components/Button";
+import { AuthContext } from "../../contexts/auth";
 import { styles } from "./styles";
 
 export function InitialPage() {
+  const { biometric } = useContext(AuthContext);
 
   return (
     <SafeAreaView style={styles.centeredView}>
       <StatusBar
         animated={true}
-        barStyle='light-content'
-        backgroundColor='#000'
+        barStyle='dark-content'
+        backgroundColor='#FFF'
       />
-      <Text style={styles.description}>Imagem png</Text>
       <Image
         source={logoPng}
+        resizeMode='contain'
+        style={styles.logoPng}
       />
+      <Text style={styles.title}>Olá!</Text>
+      <Text style={styles.description}>Use a digital, PIN ou padrão para acessar o app.</Text>
 
-      <Text style={styles.description}>Imagem svg</Text>
-      <Image
-        source={logoSvg}
-      />
+      <View style={styles.footer}>
+        <Button
+          title="Entrar"
+          onPress={biometric}
+        />
+      </View>
     </SafeAreaView>
   );
 }

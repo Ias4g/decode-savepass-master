@@ -27,6 +27,7 @@ export function SignIn() {
       )
     }
   })
+  
   const textStyle = useAnimatedStyle(() => {
     return {
       transform: [{ translateY: textPosition.value }],
