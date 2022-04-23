@@ -128,11 +128,11 @@ export const AuthProvider: React.FC = ({ children }) => {
       const rss = await getUser()
       if (rss) {
         biometric()
+        AppStateExample()
       }
     }
 
     load()
-    AppStateExample()
   }, []);
 
   return (
