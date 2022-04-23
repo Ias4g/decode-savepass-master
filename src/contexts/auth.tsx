@@ -1,6 +1,7 @@
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import * as LocalAuthentication from 'expo-local-authentication';
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
+import { AppState } from "react-native";
 import Toast from "react-native-toast-message";
 
 type UserData = {
@@ -29,6 +30,9 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<UserData | null>(null);
   const [modalVisibleRegister, setModalVisibleRegister] = useState(false);
   const [modalVisibleLogin, setModalVisibleLogin] = useState(false)
+  const appState = useRef(AppState.currentState);
+  // const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
 
   const { getItem, removeItem } = useAsyncStorage("@savepass:user");
 
@@ -98,6 +102,27 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   }
 
+  function _handleAppStateChange(nextAppState: any) {
+    if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+      // console.log('App has come to the foreground!(App veio para o primeiro plano!');
+
+      setUserLogged(false)
+      biometric()
+    }
+
+    appState.current = nextAppState;
+    // setAppStateVisible(appState.current);
+    // console.log('AppState', appState.current);
+  };
+
+  function AppStateExample() {
+    AppState.addEventListener('change', _handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange);
+    }
+  };
+
   useEffect(() => {
     async function load() {
       const rss = await getUser()
@@ -107,6 +132,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
 
     load()
+    AppStateExample()
   }, []);
 
   return (
