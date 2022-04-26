@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Image, SafeAreaView, StatusBar, Text, View } from "react-native";
+import React, { useContext, useEffect } from "react";
+import { Image, StatusBar, Text, View } from "react-native";
 import logoPng from '../../assets/login-screen.png';
 import { Button } from "../../components/Button";
 import { AuthContext } from "../../contexts/auth";
@@ -9,7 +9,7 @@ export function InitialPage() {
   const { biometric } = useContext(AuthContext);
 
   return (
-    <SafeAreaView style={styles.centeredView}>
+    <View style={styles.centeredView}>
       <StatusBar
         animated={true}
         barStyle='dark-content'
@@ -29,6 +29,6 @@ export function InitialPage() {
           onPress={biometric}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }

@@ -16,9 +16,9 @@ export const styles = StyleSheet.create({
   avatar: {
     width: 56,
     height: 56,
-    borderColor: '#FFFFFF',
-    borderWidth: 2,
-    borderRadius: 8
+    // borderColor: '#FFFFFF',
+    // borderWidth: 2,
+    borderRadius: 4
   },
 
   user: {
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
   button: {
     height: 56,
     width: 56,
-    borderRadius: 8,
+    borderRadius: 4,
     borderColor: '#FFFFFF',
     borderWidth: 2,
     justifyContent: 'center',

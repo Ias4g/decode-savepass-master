@@ -1,13 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { KeyboardAvoidingView, Modal, Platform, StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, Modal, Platform, View } from "react-native";
+import Animated, { Easing, Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import Toast from "react-native-toast-message";
 import * as yup from "yup";
+import logo from '../../assets/logo.png';
 import { Button } from "../../components/Button";
 import { ControlledInput } from "../../components/ControlledInput";
 import { AuthContext } from "../../contexts/auth";
+import { styled } from './styles';
 
 type FormData = {
   name: string;
@@ -38,6 +41,7 @@ const schema = yup.object({
 });
 
 export function Register() {
+  const { setItem } = useAsyncStorage("@savepass:user");
   const { modalVisibleRegister, setUserLogged } = useContext(AuthContext);
   const {
     control,
@@ -45,9 +49,34 @@ export function Register() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
-  });
+  })
 
-  const { setItem } = useAsyncStorage("@savepass:user");
+  const logoPosition = useSharedValue(-100)
+  const textPosition = useSharedValue(30)
+
+  const logoStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: logoPosition.value }],
+      opacity: interpolate(
+        logoPosition.value,
+        [-100, 0],
+        [0, 1],
+        Extrapolate.CLAMP
+      )
+    }
+  })
+
+  const textStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: textPosition.value }],
+      opacity: interpolate(
+        textPosition.value,
+        [30, 0],
+        [0, 1],
+        Extrapolate.CLAMP
+      )
+    }
+  })
 
   async function registerUser(data: FormData) {
     try {
@@ -68,19 +97,32 @@ export function Register() {
     }
   }
 
+  useEffect(() => {
+    logoPosition.value = withTiming(0, {
+      duration: 1000
+    }, () => {
+      textPosition.value = withTiming(0, {
+        duration: 1000,
+        easing: Easing.bounce
+      })
+    })
+  }, [])
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
+      style={styled.container}
     >
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisibleRegister}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={styles.form}>
+        <View style={styled.centeredView}>
+          <Animated.Image source={logo} style={[styled.logo, logoStyle]} />
+          <Animated.Text style={[styled.description, textStyle]}>Bem-vindo ao Iza Pass</Animated.Text>
+          <View style={styled.modalView}>
+            <View style={styled.form}>
               <ControlledInput
                 name="name"
                 control={control}
@@ -131,39 +173,3 @@ export function Register() {
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#F2F3F5',
-    alignItems: 'center'
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  modalView: {
-    width: "90%",
-    padding: 20,
-    elevation: 5,
-    borderRadius: 20,
-    shadowRadius: 20,
-    textAlign: "center",
-    marginTop: 156,
-    shadowColor: "#000",
-    alignItems: "center",
-    shadowOpacity: 0.25,
-    backgroundColor: "#F2F3F5",
-    justifyContent: "center",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-  },
-
-  form: {
-    width: "100%",
-    marginBottom: 20,
-  },
-});

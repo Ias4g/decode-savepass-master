@@ -110,9 +110,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       biometric()
     }
 
-    appState.current = nextAppState;
-    // setAppStateVisible(appState.current);
-    // console.log('AppState', appState.current);
+    appState.current = nextAppState
   };
 
   function AppStateExample() {

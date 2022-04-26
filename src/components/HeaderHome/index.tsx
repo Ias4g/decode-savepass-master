@@ -25,6 +25,7 @@ export function HeaderHome() {
       <Image
         source={{ uri: user?.url_avatar }}
         style={styles.avatar}
+        resizeMode='cover'
       />
 
       <View style={styles.user}>
