@@ -6,4 +6,4 @@ export const styled = StyleSheet.create({
         alignItems: "center",
         backgroundColor: '#000',
     }
-});
+})

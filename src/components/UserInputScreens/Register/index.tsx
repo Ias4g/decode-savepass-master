@@ -7,9 +7,9 @@ import Animated, { Easing, Extrapolate, interpolate, useAnimatedStyle, useShared
 import Toast from "react-native-toast-message";
 import * as yup from "yup";
 import logo from '../../assets/logo.png';
-import { Button } from "../../components/Button";
-import { ControlledInput } from "../../components/ControlledInput";
-import { AuthContext } from "../../contexts/auth";
+import { Button } from "../../Button";
+import { ControlledInput } from "../../ControlledInput";
+import { AuthContext } from "../../../contexts/auth";
 import { styled } from './styles';
 
 type FormData = {

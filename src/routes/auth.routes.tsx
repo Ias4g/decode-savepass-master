@@ -1,8 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React, { useContext } from 'react'
 import { AuthContext } from '../contexts/auth'
-import { InitialPage } from '../screens/InitialPage'
-import { SignIn } from '../screens/SignIn'
+import { LogIn } from '../screens/LogIn'
 
 const { Navigator, Screen } = createNativeStackNavigator()
 
@@ -15,17 +14,15 @@ export function AuthRoutes() {
                 headerShown: false
             }}
         >
-            {hasUser ? (
-                <Screen
-                    name='Initial Page'
-                    component={InitialPage}
-                />
-            ) : (
-                <Screen
-                    name='Login'
-                    component={SignIn}
-                />
-            )}
+
+            {/* <Screen
+                name='Initial Page'
+                component={InitialPage}
+            /> */}
+            <Screen
+                name='Login'
+                component={LogIn}
+            />
 
 
         </Navigator>
